@@ -1,6 +1,6 @@
-package ua.factoriald.salestest.service;
+package ua.factoriald.salestest.service.abstraction;
 
-import ua.factoriald.salestest.entity.AbstractEntity;
+import ua.factoriald.salestest.entity.abstraction.AbstractEntity;
 
 import java.util.List;
 import java.util.Optional;

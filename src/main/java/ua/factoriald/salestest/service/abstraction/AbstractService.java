@@ -1,9 +1,9 @@
-package ua.factoriald.salestest.service;
+package ua.factoriald.salestest.service.abstraction;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import ua.factoriald.salestest.entity.AbstractEntity;
+import ua.factoriald.salestest.entity.abstraction.AbstractEntity;
 import ua.factoriald.salestest.exception.CommonException;
-import ua.factoriald.salestest.repository.CommonRepository;
+import ua.factoriald.salestest.repository.abstraction.CommonRepository;
 import ua.factoriald.salestest.util.RepositoryError;
 
 import java.util.ArrayList;

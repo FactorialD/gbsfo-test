@@ -1,7 +1,8 @@
 package ua.factoriald.salestest.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -16,25 +17,24 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class Item extends AbstractEntity {
-
+public class OrderStatus extends AbstractEntity {
     @Id
     @GeneratedValue
     private Long id;
 
-    private String name;
-    private Float price;
+    String orderName;
 
-    @ManyToOne(fetch= FetchType.LAZY, cascade= CascadeType.ALL)
-    @JsonBackReference
-    private SalesOrder order;
+    /**
+     * TODO add fields attr_begin, attr_end for better status management
+     * in cause of need to disable statuses while keeping old records
+     */
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Item item = (Item) o;
-        return id != null && Objects.equals(id, item.id);
+        OrderStatus that = (OrderStatus) o;
+        return id != null && Objects.equals(id, that.id);
     }
 
     @Override

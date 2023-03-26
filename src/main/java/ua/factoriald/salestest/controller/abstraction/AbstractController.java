@@ -1,9 +1,9 @@
-package ua.factoriald.salestest.controller;
+package ua.factoriald.salestest.controller.abstraction;
 
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
-import ua.factoriald.salestest.entity.AbstractEntity;
-import ua.factoriald.salestest.service.CommonService;
+import ua.factoriald.salestest.entity.abstraction.AbstractEntity;
+import ua.factoriald.salestest.service.abstraction.CommonService;
 
 
 

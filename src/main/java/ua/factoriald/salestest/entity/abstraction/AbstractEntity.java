@@ -1,4 +1,4 @@
-package ua.factoriald.salestest.entity;
+package ua.factoriald.salestest.entity.abstraction;
 
 import jakarta.persistence.MappedSuperclass;
 

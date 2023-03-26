@@ -9,6 +9,7 @@ import lombok.ToString;
 import org.hibernate.Hibernate;
 import ua.factoriald.salestest.entity.abstraction.AbstractEntity;
 
+import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
@@ -16,14 +17,15 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class Item extends AbstractEntity {
+public class Payment extends AbstractEntity {
 
     @Id
     @GeneratedValue
     private Long id;
 
-    private String name;
-    private Float price;
+    private Long number;
+    private Float sum;
+    private Timestamp paymentDate;
 
     @ManyToOne(fetch= FetchType.LAZY, cascade= CascadeType.ALL)
     @JsonBackReference
@@ -33,8 +35,8 @@ public class Item extends AbstractEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Item item = (Item) o;
-        return id != null && Objects.equals(id, item.id);
+        Payment payment = (Payment) o;
+        return id != null && Objects.equals(id, payment.id);
     }
 
     @Override

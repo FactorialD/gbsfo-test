@@ -3,17 +3,17 @@ package ua.factoriald.salestest.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ua.factoriald.salestest.controller.abstraction.AbstractController;
-import ua.factoriald.salestest.entity.Item;
-import ua.factoriald.salestest.service.ItemService;
+import ua.factoriald.salestest.entity.Payment;
+import ua.factoriald.salestest.service.PaymentService;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/item")
-public class ItemController extends AbstractController<Item, ItemService> {
+@RequestMapping("/payment")
+public class PaymentController extends AbstractController<Payment, PaymentService> {
 
-    protected ItemController(ItemService service) {
+    protected PaymentController(PaymentService service) {
         super(service);
     }
 
@@ -21,18 +21,18 @@ public class ItemController extends AbstractController<Item, ItemService> {
      * @return all entity records
      */
     @GetMapping("/all")
-    ResponseEntity<List<Item>> getAll() {
+    ResponseEntity<List<Payment>> getAll() {
         return ResponseEntity.ok(getService().getAll());
     }
 
     /**
      * creates new entity
-     * @param newItem new entity object
+     * @param newPayment new entity object
      * @return new created entity
      */
     @PostMapping("/new")
-    ResponseEntity<Item> newItem(@RequestBody Item newItem) {
-        Optional<Item> result = getService().save(newItem);
+    ResponseEntity<Payment> newItem(@RequestBody Payment newPayment) {
+        Optional<Payment> result = getService().save(newPayment);
         if(result.isEmpty()){
             return ResponseEntity.internalServerError().build();
         }
@@ -44,12 +44,12 @@ public class ItemController extends AbstractController<Item, ItemService> {
      * @return entity with id needed
      */
     @GetMapping("/{id}")
-    ResponseEntity<Item> getItem(@PathVariable Optional<Long> id) {
+    ResponseEntity<Payment> getItem(@PathVariable Optional<Long> id) {
 
         if(id.isEmpty()){
             return ResponseEntity.badRequest().build();
         }
-        Optional<Item> result = getService().getById(id.get());
+        Optional<Payment> result = getService().getById(id.get());
         if(result.isEmpty()){
             return ResponseEntity.notFound().build();
         }
@@ -58,25 +58,27 @@ public class ItemController extends AbstractController<Item, ItemService> {
 
     /**
      * Updates entity
-     * @param newItem updated entity
+     * @param newPayment updated entity
      * @param id id of entity for update
      * @return updated entity
      */
     @PutMapping("/{id}")
-    ResponseEntity<Item> updateItem(@RequestBody Item newItem, @PathVariable Optional<Long> id) {
+    ResponseEntity<Payment> updateItem(@RequestBody Payment newPayment, @PathVariable Optional<Long> id) {
 
         if(id.isEmpty()){
             return ResponseEntity.badRequest().build();
         }
-        Optional<Item> neededItem = getService().getById(id.get());
-        if(neededItem.isEmpty()){
+        Optional<Payment> neededPayment = getService().getById(id.get());
+        if(neededPayment.isEmpty()){
             return ResponseEntity.notFound().build();
         }
-        neededItem.get().setName(newItem.getName());
-        neededItem.get().setPrice(newItem.getPrice());
+        neededPayment.get().setNumber(newPayment.getNumber());
+        neededPayment.get().setSum(newPayment.getSum());
+        neededPayment.get().setPaymentDate(newPayment.getPaymentDate());
+
         getService().getRepository().flush();
 
-        Optional<Item> result = getService().getById(id.get());
+        Optional<Payment> result = getService().getById(id.get());
 
         if(result.isEmpty()){
             return ResponseEntity.internalServerError().build();
@@ -90,11 +92,11 @@ public class ItemController extends AbstractController<Item, ItemService> {
      * @return empty 204 response
      */
     @DeleteMapping("/{id}")
-    ResponseEntity<Item> deleteItem(@PathVariable Optional<Long> id) {
+    ResponseEntity<Payment> deleteItem(@PathVariable Optional<Long> id) {
         if(id.isEmpty()){
             return ResponseEntity.badRequest().build();
         }
-        Optional<Item> result = getService().getById(id.get());
+        Optional<Payment> result = getService().getById(id.get());
         if(result.isEmpty()){
             return ResponseEntity.notFound().build();
         }
@@ -106,3 +108,4 @@ public class ItemController extends AbstractController<Item, ItemService> {
     }
 
 }
+
