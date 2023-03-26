@@ -31,7 +31,7 @@ public class PaymentController extends AbstractController<Payment, PaymentServic
      * @return new created entity
      */
     @PostMapping("/new")
-    ResponseEntity<Payment> newItem(@RequestBody Payment newPayment) {
+    ResponseEntity<Payment> newPayment(@RequestBody Payment newPayment) {
         Optional<Payment> result = getService().save(newPayment);
         if(result.isEmpty()){
             return ResponseEntity.internalServerError().build();
@@ -44,7 +44,7 @@ public class PaymentController extends AbstractController<Payment, PaymentServic
      * @return entity with id needed
      */
     @GetMapping("/{id}")
-    ResponseEntity<Payment> getItem(@PathVariable Optional<Long> id) {
+    ResponseEntity<Payment> getPayment(@PathVariable Optional<Long> id) {
 
         if(id.isEmpty()){
             return ResponseEntity.badRequest().build();
@@ -63,7 +63,7 @@ public class PaymentController extends AbstractController<Payment, PaymentServic
      * @return updated entity
      */
     @PutMapping("/{id}")
-    ResponseEntity<Payment> updateItem(@RequestBody Payment newPayment, @PathVariable Optional<Long> id) {
+    ResponseEntity<Payment> updatePayment(@RequestBody Payment newPayment, @PathVariable Optional<Long> id) {
 
         if(id.isEmpty()){
             return ResponseEntity.badRequest().build();
@@ -92,7 +92,7 @@ public class PaymentController extends AbstractController<Payment, PaymentServic
      * @return empty 204 response
      */
     @DeleteMapping("/{id}")
-    ResponseEntity<Payment> deleteItem(@PathVariable Optional<Long> id) {
+    ResponseEntity<Payment> deletePayment(@PathVariable Optional<Long> id) {
         if(id.isEmpty()){
             return ResponseEntity.badRequest().build();
         }

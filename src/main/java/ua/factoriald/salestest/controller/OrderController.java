@@ -31,7 +31,8 @@ public class OrderController extends AbstractController<SalesOrder, OrderService
      * @return new created entity
      */
     @PostMapping("/new")
-    ResponseEntity<SalesOrder> newItem(@RequestBody SalesOrder newPayment) {
+    ResponseEntity<SalesOrder> newOrder(@RequestBody SalesOrder newPayment) {
+        getService().setStatusAsCreated(newPayment);
         Optional<SalesOrder> result = getService().save(newPayment);
         if(result.isEmpty()){
             return ResponseEntity.internalServerError().build();
@@ -44,7 +45,7 @@ public class OrderController extends AbstractController<SalesOrder, OrderService
      * @return entity with id needed
      */
     @GetMapping("/{id}")
-    ResponseEntity<SalesOrder> getItem(@PathVariable Optional<Long> id) {
+    ResponseEntity<SalesOrder> getOrder(@PathVariable Optional<Long> id) {
 
         if(id.isEmpty()){
             return ResponseEntity.badRequest().build();
@@ -63,7 +64,7 @@ public class OrderController extends AbstractController<SalesOrder, OrderService
      * @return updated entity
      */
     @PutMapping("/{id}")
-    ResponseEntity<SalesOrder> updateItem(@RequestBody SalesOrder newPayment, @PathVariable Optional<Long> id) {
+    ResponseEntity<SalesOrder> updateOrder(@RequestBody SalesOrder newPayment, @PathVariable Optional<Long> id) {
 
         if(id.isEmpty()){
             return ResponseEntity.badRequest().build();
@@ -93,7 +94,7 @@ public class OrderController extends AbstractController<SalesOrder, OrderService
      * @return empty 204 response
      */
     @DeleteMapping("/{id}")
-    ResponseEntity<SalesOrder> deleteItem(@PathVariable Optional<Long> id) {
+    ResponseEntity<SalesOrder> deleteOrder(@PathVariable Optional<Long> id) {
         if(id.isEmpty()){
             return ResponseEntity.badRequest().build();
         }
