@@ -1,5 +1,6 @@
 package ua.factoriald.salestest.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -32,9 +33,11 @@ public class SalesOrder extends AbstractEntity {
 
     //TODO change to ManyToMany if needed
     @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Item> totalItems;
 
     @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Payment> totalPayments;
 
     @Override

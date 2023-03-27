@@ -1,19 +1,19 @@
-package ua.factoriald.salestest.controller;
+package ua.factoriald.salestest.controller.crud;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ua.factoriald.salestest.controller.abstraction.AbstractController;
-import ua.factoriald.salestest.entity.SalesOrder;
-import ua.factoriald.salestest.service.OrderService;
+import ua.factoriald.salestest.entity.Item;
+import ua.factoriald.salestest.service.ItemService;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/order")
-public class OrderController extends AbstractController<SalesOrder, OrderService> {
+@RequestMapping("/item")
+public class ItemController extends AbstractController<Item, ItemService> {
 
-    protected OrderController(OrderService service) {
+    protected ItemController(ItemService service) {
         super(service);
     }
 
@@ -21,19 +21,18 @@ public class OrderController extends AbstractController<SalesOrder, OrderService
      * @return all entity records
      */
     @GetMapping("/all")
-    ResponseEntity<List<SalesOrder>> getAll() {
+    ResponseEntity<List<Item>> getAll() {
         return ResponseEntity.ok(getService().getAll());
     }
 
     /**
      * creates new entity
-     * @param newPayment new entity object
+     * @param newItem new entity object
      * @return new created entity
      */
     @PostMapping("/new")
-    ResponseEntity<SalesOrder> newOrder(@RequestBody SalesOrder newPayment) {
-        getService().setStatusAsCreated(newPayment);
-        Optional<SalesOrder> result = getService().save(newPayment);
+    ResponseEntity<Item> newItem(@RequestBody Item newItem) {
+        Optional<Item> result = getService().save(newItem);
         if(result.isEmpty()){
             return ResponseEntity.internalServerError().build();
         }
@@ -45,12 +44,12 @@ public class OrderController extends AbstractController<SalesOrder, OrderService
      * @return entity with id needed
      */
     @GetMapping("/{id}")
-    ResponseEntity<SalesOrder> getOrder(@PathVariable Optional<Long> id) {
+    ResponseEntity<Item> getItem(@PathVariable Optional<Long> id) {
 
         if(id.isEmpty()){
             return ResponseEntity.badRequest().build();
         }
-        Optional<SalesOrder> result = getService().getById(id.get());
+        Optional<Item> result = getService().getById(id.get());
         if(result.isEmpty()){
             return ResponseEntity.notFound().build();
         }
@@ -59,28 +58,25 @@ public class OrderController extends AbstractController<SalesOrder, OrderService
 
     /**
      * Updates entity
-     * @param newPayment updated entity
+     * @param newItem updated entity
      * @param id id of entity for update
      * @return updated entity
      */
     @PutMapping("/{id}")
-    ResponseEntity<SalesOrder> updateOrder(@RequestBody SalesOrder newPayment, @PathVariable Optional<Long> id) {
+    ResponseEntity<Item> updateItem(@RequestBody Item newItem, @PathVariable Optional<Long> id) {
 
         if(id.isEmpty()){
             return ResponseEntity.badRequest().build();
         }
-        Optional<SalesOrder> neededController = getService().getById(id.get());
-        if(neededController.isEmpty()){
+        Optional<Item> neededItem = getService().getById(id.get());
+        if(neededItem.isEmpty()){
             return ResponseEntity.notFound().build();
         }
-        neededController.get().setNumber(newPayment.getNumber());
-        neededController.get().setStatus(newPayment.getStatus());
-        neededController.get().setTotalItems(newPayment.getTotalItems());
-        neededController.get().setTotalPayments(newPayment.getTotalPayments());
-
+        neededItem.get().setName(newItem.getName());
+        neededItem.get().setPrice(newItem.getPrice());
         getService().getRepository().flush();
 
-        Optional<SalesOrder> result = getService().getById(id.get());
+        Optional<Item> result = getService().getById(id.get());
 
         if(result.isEmpty()){
             return ResponseEntity.internalServerError().build();
@@ -94,11 +90,11 @@ public class OrderController extends AbstractController<SalesOrder, OrderService
      * @return empty 204 response
      */
     @DeleteMapping("/{id}")
-    ResponseEntity<SalesOrder> deleteOrder(@PathVariable Optional<Long> id) {
+    ResponseEntity<Item> deleteItem(@PathVariable Optional<Long> id) {
         if(id.isEmpty()){
             return ResponseEntity.badRequest().build();
         }
-        Optional<SalesOrder> result = getService().getById(id.get());
+        Optional<Item> result = getService().getById(id.get());
         if(result.isEmpty()){
             return ResponseEntity.notFound().build();
         }
@@ -110,5 +106,3 @@ public class OrderController extends AbstractController<SalesOrder, OrderService
     }
 
 }
-
-

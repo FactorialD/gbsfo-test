@@ -1,4 +1,4 @@
-package ua.factoriald.salestest.controller;
+package ua.factoriald.salestest.controller.crud;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

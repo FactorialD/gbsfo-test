@@ -27,6 +27,7 @@ public class Item extends AbstractEntity {
 
     @ManyToOne(fetch= FetchType.LAZY, cascade= CascadeType.ALL)
     @JsonBackReference
+    @ToString.Exclude
     private SalesOrder order;
 
     @Override
